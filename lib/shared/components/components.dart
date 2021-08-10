@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void navigateTo(context, widget) => Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => widget,
-  ),
-);
+      context,
+      MaterialPageRoute(
+        builder: (context) => widget,
+      ),
+    );
 
 Widget defaultButton({
   @required String text,
@@ -154,77 +154,82 @@ Widget buildTaskItem(Map model, context) => Dismissible(
         ),
       ),
       onDismissed: (direction) {
-        AppCubit.get(context).deleteFromDatabase(id: model['id'],);
+        AppCubit.get(context).deleteFromDatabase(
+          id: model['id'],
+        );
       },
     );
 
-
 Widget taskBuilder({
   @required List<Map> tasks,
-}) => ConditionalBuilder(
-  condition: tasks.length > 0,
-  builder: (context) => ListView.separated(
-    itemBuilder: (context, index) => buildTaskItem(tasks[index], context),
-    separatorBuilder: (context, index) => buildOurDivider(),
-    itemCount: tasks.length,
-  ),
-  fallback: (context) => Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.menu,
-          size: 100,
-          color: Colors.grey,
+}) =>
+    ConditionalBuilder(
+      condition: tasks.length > 0,
+      builder: (context) => ListView.separated(
+        itemBuilder: (context, index) => buildTaskItem(tasks[index], context),
+        separatorBuilder: (context, index) => buildOurDivider(),
+        itemCount: tasks.length,
+      ),
+      fallback: (context) => Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.menu,
+              size: 100,
+              color: Colors.grey,
+            ),
+            Text(
+              'No Tasks Yet, Please Add Some Tasks',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
+            ),
+          ],
         ),
-        Text(
-          'No Tasks Yet, Please Add Some Tasks',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    ),
-  ),
-);
+      ),
+    );
 
 Widget buildOurDivider() => Container(
-  margin: EdgeInsets.only(left: 20),
-  width: double.infinity,
-  height: 1,
-  color: Colors.grey[300],
-);
+      margin: EdgeInsets.only(left: 20),
+      width: double.infinity,
+      height: 1,
+      color: Colors.grey[300],
+    );
 
-
-Widget articleBuilder(list, contextGlobal, {isSearch = false}) => ConditionalBuilder(
-  condition: list.length>0, //state is! NewsGetScienceLoadingState,
-  builder: (context) => ListView.separated(
-    physics: BouncingScrollPhysics(),
-    itemBuilder: (context, index) =>  buildArticleItem(list[index], contextGlobal),// TODO notice which context!
-    separatorBuilder: (context, index) =>  buildOurDivider(),
-    itemCount: list.length,
-  ),
-  fallback: (context) => isSearch
-      ?Center(child: Text("Nothing"),)
-      :Center(child: CircularProgressIndicator()),
-);
+Widget articleBuilder(list, contextGlobal, {isSearch = false}) =>
+    ConditionalBuilder(
+      condition: list.length > 0, //state is! NewsGetScienceLoadingState,
+      builder: (context) => ListView.separated(
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (context, index) =>
+            buildArticleItem(list[index], contextGlobal),
+        // TODO notice which context!
+        separatorBuilder: (context, index) => buildOurDivider(),
+        itemCount: list.length,
+      ),
+      fallback: (context) => isSearch
+          ? Center(
+              child: Text("Nothing"),
+            )
+          : Center(child: CircularProgressIndicator()),
+    );
 
 // the one above use this below:
 Widget buildArticleItem(article, context) => InkWell(
-  onTap: (){
-    navigateTo(context, WebViewScreen(article['url']),);
-  },
-  child:   Padding(
-
-    padding: const EdgeInsets.all(20.0),
-
-    child: Row(
-
-      children: [
-
-        /*
+      onTap: () {
+        navigateTo(
+          context,
+          WebViewScreen(article['url']),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          children: [
+            /*
 
         ProgressiveImage.custom(
 
@@ -243,118 +248,82 @@ Widget buildArticleItem(article, context) => InkWell(
               )
 
          */
-
-        Container(
-
-          height: 120,
-
-          width: 120,
-
-          decoration: BoxDecoration(
-
-            borderRadius: BorderRadius.circular(10.0),
-
-            image: DecorationImage(
-
-              onError: (object, stackTrace) => Center(),
-
-              image: NetworkImage('${article['urlToImage']}'),
-
-              fit: BoxFit.cover,
-
-            ),
-
-          ),
-
-          // child: FadeInImage(
-
-          //   fit: BoxFit.cover,
-
-          //   //placeholderErrorBuilder: (context,exception,stackTrace) => Center(child: Text('kachm sraaaa'),),
-
-          //   placeholder: AssetImage('assets/images/maled.png'),
-
-          //   image: NetworkImage('${article['urlToImage']}'),
-
-          //   imageErrorBuilder: (ctx, exception, stackTrace) {
-
-          //     return Center(child: Text('image not found'),); //THE WIDGET YOU WANT TO SHOW IF URL NOT RETURN IMAGE
-
-          //   },
-
-          // ),
-
-          // child: FadeInImage.memoryNetwork(
-
-          //   imageErrorBuilder: (ctx, exception, stackTrace) {
-
-          //     return Center(child: Text('image not found'),); //THE WIDGET YOU WANT TO SHOW IF URL NOT RETURN IMAGE
-
-          //   },
-
-          //   placeholder: kTransparentImage,//'assets/images/male.png',
-
-          //   image: '${article['urlToImage']}',
-
-          //   fit: BoxFit.cover,
-
-          // ),
-
-        ),
-
-        SizedBox(width: 20.0,),
-
-        Expanded(
-
-          child: Container(
-
-            height: 120.0,
-
-            child: Column(
-
-              crossAxisAlignment: CrossAxisAlignment.start,
-
-              //mainAxisSize: MainAxisSize.min,
-
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-              children: [
-
-                Expanded(
-
-                  child: Text(
-
-                    '${article['title']}',
-
-                    style: Theme.of(context).textTheme.bodyText1,
-
-                    maxLines: 3,
-
-                    overflow: TextOverflow.ellipsis,
-
-                  ),
-
+            Container(
+              height: 120,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                image: DecorationImage(
+                  onError: (object, stackTrace) => Center(),
+                  image: NetworkImage('${article['urlToImage']}'),
+                  fit: BoxFit.cover,
                 ),
+              ),
+              // child: FadeInImage(
 
-                Text(
+              //   fit: BoxFit.cover,
 
-                  '${article['publishedAt']}',
+              //   //placeholderErrorBuilder: (context,exception,stackTrace) => Center(child: Text('kachm sraaaa'),),
 
-                  style: Theme.of(context).textTheme.bodyText2,
+              //   placeholder: AssetImage('assets/images/maled.png'),
 
-                ),
+              //   image: NetworkImage('${article['urlToImage']}'),
 
-              ],
+              //   imageErrorBuilder: (ctx, exception, stackTrace) {
 
+              //     return Center(child: Text('image not found'),); //THE WIDGET YOU WANT TO SHOW IF URL NOT RETURN IMAGE
+
+              //   },
+
+              // ),
+
+              // child: FadeInImage.memoryNetwork(
+
+              //   imageErrorBuilder: (ctx, exception, stackTrace) {
+
+              //     return Center(child: Text('image not found'),); //THE WIDGET YOU WANT TO SHOW IF URL NOT RETURN IMAGE
+
+              //   },
+
+              //   placeholder: kTransparentImage,//'assets/images/male.png',
+
+              //   image: '${article['urlToImage']}',
+
+              //   fit: BoxFit.cover,
+
+              // ),
             ),
+            SizedBox(
+              width: 20.0,
+            ),
+            Expanded(
+              child: Container(
+                height: 120.0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
 
-          ),
+                  //mainAxisSize: MainAxisSize.min,
 
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${article['title']}',
+                        style: Theme.of(context).textTheme.bodyText1,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Text(
+                      '${article['publishedAt']}',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-
-      ],
-
-    ),
-
-  ),
-);
+      ),
+    );

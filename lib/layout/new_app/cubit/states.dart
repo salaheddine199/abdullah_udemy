@@ -3,6 +3,7 @@ abstract class NewsStates{}
 class NewsInitialState extends NewsStates{}
 
 class NewsBottomNavState extends NewsStates{}
+class NewsChangeModeState extends NewsStates{}
 
 class NewsGetBusinessSuccessState extends NewsStates{}
 class NewsGetBusinessLoadingState extends NewsStates{}
@@ -39,5 +40,3 @@ class NewsGetSearchErrorState extends NewsStates{
   NewsGetSearchErrorState(this.error);
 
 }
-
-class NewsChangeModeState extends NewsStates{}
