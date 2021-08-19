@@ -123,7 +123,7 @@ class AppCubit extends Cubit<AppStates> {
 
       emit(AppGetDatabaseState());
     }).catchError((error) =>
-        print('error while getting data from db : ${error.toString()}'));;
+        print('error while getting data from db : ${error.toString()}'));
   }
 
   void updateDatabase({

@@ -11,6 +11,15 @@ void navigateTo(context, widget) => Navigator.push(
       ),
     );
 
+void navigateToNoBack(context, widget) => Navigator.pushAndRemoveUntil(
+      // pushReplacement
+      context,
+      MaterialPageRoute(
+        builder: (context) => widget,
+      ),
+      (Route<dynamic> route) => false,
+    );
+
 Widget defaultButton({
   @required String text,
   @required Function onPress,
@@ -45,6 +54,18 @@ Widget defaultButton({
         ),
       ),
     );
+
+Widget defaultTextButton({
+  @required String text,
+  @required Function function,
+  TextStyle textStyle,
+}) => TextButton(
+  child: Text(
+    '$text',
+    style: textStyle,
+  ),
+  onPressed: function,
+);
 
 Widget defaultFormField({
   @required Function validFun,

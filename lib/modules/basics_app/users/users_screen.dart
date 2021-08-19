@@ -1,6 +1,7 @@
 import 'package:abdullah_mansour/models/user/user_model.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class UsersScreen extends StatelessWidget {
   List<UserMode> users = [
     UserMode(

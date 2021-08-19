@@ -1,5 +1,4 @@
 import 'package:abdullah_mansour/shared/components/components.dart';
-import 'package:abdullah_mansour/shared/components/constants.dart';
 import 'package:abdullah_mansour/layout/todo_app/cubit/cubit.dart';
 import 'package:abdullah_mansour/layout/todo_app/cubit/states.dart';
 import 'package:conditional_builder/conditional_builder.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class TodoLayout extends StatelessWidget {
   //FocusNode focusNode = new FocusNode();
 

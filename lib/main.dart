@@ -1,6 +1,5 @@
 import 'package:abdullah_mansour/layout/new_app/cubit/cubit.dart';
 import 'package:abdullah_mansour/layout/new_app/cubit/states.dart';
-import 'package:abdullah_mansour/modules/shop_app/on_boarding_screen.dart';
 import 'package:abdullah_mansour/shared/bloc_observer.dart';
 import 'package:abdullah_mansour/shared/network/local/cache_helper.dart';
 import 'package:abdullah_mansour/shared/network/remote/dio_helper.dart';
@@ -8,11 +7,10 @@ import 'package:abdullah_mansour/shared/styles/themes.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 import 'layout/new_app/news_layout.dart';
+
 
 // news app || shop app:
 void main() async {
@@ -47,7 +45,8 @@ class OurApp extends StatelessWidget {
               themeMode: CacheHelper.getDarkMode() //ThemeMode.system,
                   ?ThemeMode.dark
                   :ThemeMode.light,
-              home: OnBoardingScreen(),//NewsLayout()
+              home:  NewsLayout()
+
             // Directionality(
             //   child: NewsLayout(),
             //   textDirection: TextDirection.rtl,

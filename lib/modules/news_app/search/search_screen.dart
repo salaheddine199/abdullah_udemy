@@ -4,6 +4,7 @@ import 'package:abdullah_mansour/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class SearchScreen extends StatelessWidget {
   var searchController = TextEditingController();
 
