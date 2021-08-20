@@ -3,6 +3,7 @@ import 'package:abdullah_mansour/layout/todo_app/cubit/cubit.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void navigateTo(context, widget) => Navigator.push(
       context,
@@ -19,6 +20,21 @@ void navigateToNoBack(context, widget) => Navigator.pushAndRemoveUntil(
       ),
       (Route<dynamic> route) => false,
     );
+
+void showToast({
+  @required String text,
+  @required Color color,
+}){
+  Fluttertoast.showToast(
+      msg: text,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 5,
+      backgroundColor: color,
+      textColor: Colors.white,
+      fontSize: 16.0,
+  );
+}
 
 Widget defaultButton({
   @required String text,
