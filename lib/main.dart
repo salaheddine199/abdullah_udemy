@@ -1,7 +1,9 @@
 import 'package:abdullah_mansour/layout/new_app/cubit/cubit.dart';
 import 'package:abdullah_mansour/layout/new_app/cubit/states.dart';
+import 'package:abdullah_mansour/layout/shop_app/shop_layout.dart';
 import 'package:abdullah_mansour/modules/shop_app/login/shop_login_screen.dart';
 import 'package:abdullah_mansour/shared/bloc_observer.dart';
+import 'package:abdullah_mansour/shared/components/constants.dart';
 import 'package:abdullah_mansour/shared/network/local/cache_helper.dart';
 import 'package:abdullah_mansour/shared/network/remote/dio_helper.dart';
 import 'package:abdullah_mansour/shared/styles/themes.dart';
@@ -9,6 +11,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'layout/shop_app/cubit/cubit.dart';
+import 'layout/shop_app/cubit/states.dart';
 import 'modules/shop_app/on_boarding_screen.dart';
 
 /// shop app:
@@ -19,32 +23,52 @@ void main() async {
   DioHelper.init();
   await CacheHelper.init();
 
-  // jib darkMode hna khir
+  bool isDark = CacheHelper.getDarkMode();
   bool isOnBoarding = (CacheHelper.getData(key: 'isOnBoarding'))?? true; // First time should be on boarding screen
-  print(' is it on boarding scree: $isOnBoarding');
+  token = (CacheHelper.getData(key: 'loginToken')?? '' );
+   //print('is it dark mode: $isDark');
+   //print(' is it on boarding scree: $isOnBoarding');
+   print('Main: token: $token');
+  Widget startWidget;
+
+  if(isOnBoarding) startWidget = OnBoardingScreen();
+  else{
+    if(token.isEmpty) startWidget = ShopLoginScreen(); // loginToken
+    else startWidget = ShopLayout();
+  }
 
   runApp(OurApp(
-    isOnBoarding: isOnBoarding,
+    startWidget: startWidget,
+      isDark: isDark,
   ));
 }
 
 class OurApp extends StatelessWidget {
-  final bool isOnBoarding;
-  const OurApp({Key key, this.isOnBoarding}) : super(key: key);
+  final Widget startWidget;
+  final bool isDark;
+  const OurApp({Key key, this.startWidget, this.isDark}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Abdullah Mansour Course',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: CacheHelper.getDarkMode() //ThemeMode.system,
-          ?ThemeMode.dark
-          :ThemeMode.light,
-      home:  isOnBoarding? OnBoardingScreen() : ShopLoginScreen(),
-      // todo change the methods in DIO class
+    return BlocProvider(
+      create: (BuildContext context) { return ShopCubit()..getHomeData()..getCategories()..getFavorites()..getProfile(); },
+      child: BlocConsumer<ShopCubit,ShopStates>(
+        listener: (context, state){},
+        builder: (context, state){
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Abdullah Mansour Course',
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: isDark //ThemeMode.system,
+                ?ThemeMode.dark
+                :ThemeMode.light,
+            home:  startWidget, //isOnBoarding? OnBoardingScreen() : ShopLoginScreen(),
+            // todo change the methods in DIO class
 
+          );
+        },
+      ),
     );
   }
 }

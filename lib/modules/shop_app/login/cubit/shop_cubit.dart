@@ -1,6 +1,5 @@
 import 'package:abdullah_mansour/models/shop_app/shop_login_model.dart';
 import 'package:abdullah_mansour/modules/shop_app/login/cubit/shop_states.dart';
-import 'package:abdullah_mansour/shared/components/components.dart';
 import 'package:abdullah_mansour/shared/network/end_points.dart';
 import 'package:abdullah_mansour/shared/network/remote/dio_helper.dart';
 import 'package:bloc/bloc.dart';
@@ -20,6 +19,8 @@ class ShopLoginCubit extends Cubit<ShopLoginStates>{
   }
 
   // login:
+  ShopLoginModel loginModel;
+
   void userLogin({
     @required String email,
     @required String password,
@@ -27,15 +28,17 @@ class ShopLoginCubit extends Cubit<ShopLoginStates>{
 
     emit(ShopLoginLoadingState());
 
-    DioHelper.postData(url: LOGIN, data: {
+    DioHelper.postData(
+      url: LOGIN,
+      data: {
       'email':email,
       'password':password,
     },
     ).then((value) {
 
-      ShopLoginModel loginModel = ShopLoginModel.fromJson(json: value.data);
-      //print(loginModel.data.email);
-      //print(loginModel.message);
+      loginModel = ShopLoginModel.fromJson(json: value.data);
+      // print(loginModel.data.email);
+      // print(loginModel.message);
       emit(ShopLoginSuccessState(loginModel));
     }).catchError((error){
       print(error.toString());

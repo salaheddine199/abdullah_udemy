@@ -1,5 +1,8 @@
+import 'package:abdullah_mansour/layout/shop_app/cubit/cubit.dart';
+import 'package:abdullah_mansour/models/shop_app/get_fav_model.dart';
 import 'package:abdullah_mansour/modules/news_app/web_view/web_view_screen.dart';
 import 'package:abdullah_mansour/layout/todo_app/cubit/cubit.dart';
+import 'package:abdullah_mansour/shared/styles/colors.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,6 +38,20 @@ void showToast({
       fontSize: 16.0,
   );
 }
+
+// he did this, I sent color directly he sent ToastState. ..
+/*
+enum ToastState {SUCCESS, WARNING, ERROR}
+Color chooseToastColor(ToastState state){
+  Color color;
+  switch(state){
+    case ToastState.SUCCESS: color = Colors.grey; break;
+    case ToastState.WARNING: color = Colors.amber; break;
+    case ToastState.ERROR: color = Colors.red; break;
+  }
+  return color;
+}
+*/
 
 Widget defaultButton({
   @required String text,

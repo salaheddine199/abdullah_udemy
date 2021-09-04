@@ -32,7 +32,7 @@ ThemeData darkTheme = ThemeData(
     backgroundColor: HexColor('333739'),
     unselectedItemColor: Colors.grey,
     type: BottomNavigationBarType.fixed,
-    selectedItemColor: Colors.deepOrange,
+    selectedItemColor: defaultColor,
     elevation: 20.0,
   ),
   textTheme: TextTheme(
@@ -77,7 +77,7 @@ ThemeData lightTheme = ThemeData(
     backgroundColor: Colors.white,
     unselectedItemColor: Colors.grey,
     type: BottomNavigationBarType.fixed,
-    selectedItemColor: Colors.deepOrange,
+    selectedItemColor: defaultColor,
     elevation: 20.0,
   ),
   textTheme: TextTheme(
